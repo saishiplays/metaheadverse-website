@@ -208,12 +208,160 @@ p { max-width: 680px; margin: auto; opacity: 0.8; line-height: 1.7; margin-botto
 @media (max-width: 600px) { #metaheadGrid { grid-template-columns: repeat(2, 1fr); } }
 
 /* CARDS */
-.card { cursor: pointer; text-align: center; transition: transform 0.3s, box-shadow 0.3s; will-change: transform; width: 180px; height: 260px; display: flex; flex-direction: column; justify-content: flex-start; }
-.card img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); transition: transform 0.3s, box-shadow 0.3s, filter 0.3s; }
-.card:hover { transform: scale(1.06) translateY(-4px); }
-.card img:hover { transform: translateY(-10px) scale(1.05) rotate(-1deg); box-shadow: 0 0 25px rgba(255,255,255,0.15); filter: brightness(1.05); }
-.card-name { margin-top: 8px; font-size: 14px; text-align: center; flex: 1; }
-.card-flip-label { margin-bottom: 12px; font-size: 12px; opacity: 0.6; text-align: center; pointer-events: none; }
+.card {
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.4s, box-shadow 0.4s;
+  will-change: transform;
+  width: 180px;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: linear-gradient(145deg, #0a0c1a, #121629);
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 16px rgba(0,212,255,0.1);
+  overflow: hidden;
+}
+.card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px; /* square with slightly rounded corners */
+  margin-bottom: 12px;
+  border: 2px solid rgba(0,212,255,0.3);
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+}
+.card:hover {
+  transform: scale(1.06) translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,212,255,0.4), 0 0 32px rgba(0,212,255,0.2);
+}
+.card img:hover {
+  transform: translateY(-6px) scale(1.08);
+  box-shadow: 0 0 30px rgba(0,212,255,0.3);
+  filter: brightness(1.05);
+}
+.card-name {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+.card-flip-label {
+  font-size: 12px;
+  opacity: 0.7;
+  text-align: center;
+  margin-top: 4px;
+  pointer-events: none;
+}
+.card-stats {
+  display: flex;
+  justify-content: space-around;
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 8px;
+}
+.card-heart {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+  user-select: none;
+  position: relative;
+}
+
+/* Hover effect */
+.card-heart:hover svg {
+  transform: scale(1.2);
+  stroke: #00d4ff;
+  filter: drop-shadow(0 0 4px #00d4ff) drop-shadow(0 0 8px #00d4ff);
+}
+
+/* Professional Heart SVG */
+.card-heart svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Favorited State */
+.card-heart.favorited svg {
+  fill: #ff4b5c;
+  stroke: #ff4b5c;
+  animation: pulseHeart 0.6s ease;
+  filter: drop-shadow(0 0 6px #ff4b5c) drop-shadow(0 0 12px #ff4b5c) drop-shadow(0 0 16px #ff4b5c);
+}
+
+/* Count next to Heart */
+.card-heart .count {
+  font-size: 14px;
+  color: #fff;
+  text-shadow: 0 0 4px #00d4ff, 0 0 8px #0077ff;
+}
+
+/* Pulse animation */
+@keyframes pulseHeart {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px #ff4b5c)
+            drop-shadow(0 0 12px #ff4b5c)
+            drop-shadow(0 0 16px #ff4b5c);
+  }
+  50% {
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 10px #ff4b5c)
+            drop-shadow(0 0 18px #ff4b5c)
+            drop-shadow(0 0 24px #ff4b5c);
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px #ff4b5c)
+            drop-shadow(0 0 12px #ff4b5c)
+            drop-shadow(0 0 16px #ff4b5c);
+  }
+}
+
+/* Floating hearts on click */
+.floating-heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  fill: #ff4b5c;
+  animation: floatUp 1s forwards ease-out;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(-20px) scale(1.3); opacity: 1; }
+  100% { transform: translateY(-60px) scale(1); opacity: 0; }
+}
+
+/* Heart breaks on unfavorite */
+.card-heart.unfavorited svg {
+  animation: heartBreak 0.6s forwards ease;
+  fill: none;
+  stroke: #ff4b5c;
+}
+
+@keyframes heartBreak {
+  0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+  30%  { transform: scale(1.2) rotate(-10deg); }
+  60%  { transform: scale(1) rotate(10deg); }
+  100% { transform: scale(0) rotate(-20deg); opacity: 0; }
+}
 
 /* POPUP */
 #popupOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1001; opacity: 0; transition: opacity 0.5s ease; }
@@ -355,23 +503,19 @@ function highlightCurrentMenu(menuSelector) {
   links.forEach(link => {
     if (link.getAttribute("href") === currentPage) {
       link.classList.add("current");
-
-      // Desktop parent glow
       const parentLi = link.closest('ul').closest('li');
       if (parentLi) {
         const parentLink = parentLi.querySelector('a');
         if (parentLink) parentLink.classList.add('current-parent');
       }
-
-      // Mobile submenu open + glow
       const mobileSubmenu = link.closest('.mobile-submenu');
       if (mobileSubmenu) {
-        mobileSubmenu.classList.add('active'); // open submenu
-        const parentItem = mobileSubmenu.previousElementSibling; // parent <a>
+        mobileSubmenu.classList.add('active');
+        const parentItem = mobileSubmenu.previousElementSibling;
         if (parentItem) {
-          parentItem.classList.add('current-parent'); // glow
+          parentItem.classList.add('current-parent');
           const arrow = parentItem.querySelector('.arrow');
-          if (arrow) arrow.classList.add('open'); // rotate arrow
+          if (arrow) arrow.classList.add('open');
         }
       }
     }
@@ -442,7 +586,66 @@ fetch('metaheads.json')
       const cardEl = document.createElement('div');
       cardEl.className = 'card';
       cardEl.style.animationDelay = `${0.1 + i*0.1}s`;
-      cardEl.innerHTML = `<img src="${card.image}" alt="${card.name}"><div class="card-name">${card.name}</div>`;
+
+      const storedFavorites = JSON.parse(localStorage.getItem('metaheadFavorites')) || {};
+      const count = storedFavorites[card.name]?.count || 0;
+      const isFav = storedFavorites[card.name]?.favorited || false;
+
+      cardEl.innerHTML = `
+        <img src="${card.image}" alt="${card.name}">
+        <div class="card-name">${card.name}</div>
+        <div class="card-heart ${isFav ? 'favorited' : ''}">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
+            4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 
+            11.54L12 21.35z"/>
+          </svg>
+          <span class="count">${count}</span>
+        </div>
+      `;
+
+      const heart = cardEl.querySelector('.card-heart');
+
+      heart.addEventListener('click', (e) => {
+        e.stopPropagation();
+        let favData = JSON.parse(localStorage.getItem('metaheadFavorites')) || {};
+        if(!favData[card.name]) favData[card.name] = { count: 0, favorited: false };
+
+        const wasFav = favData[card.name].favorited;
+
+        if(wasFav) {
+          // UNFAVORITE with heart break
+          favData[card.name].favorited = false;
+          favData[card.name].count = Math.max(0, favData[card.name].count - 1);
+
+          heart.classList.add('unfavorited'); // trigger break animation
+          heart.classList.remove('favorited'); // remove filled state
+          setTimeout(() => heart.classList.remove('unfavorited'), 600); // reset after animation
+
+        } else {
+          // FAVORITE with floating heart
+          favData[card.name].favorited = true;
+          favData[card.name].count += 1;
+
+          heart.classList.add('favorited'); // add filled heart
+
+          // Floating heart effect
+          const floatHeart = document.createElementNS("http://www.w3.org/2000/svg","svg");
+          floatHeart.setAttribute("viewBox","0 0 24 24");
+          floatHeart.className.baseVal = "floating-heart";
+          floatHeart.innerHTML = `<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+            2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>`;
+          heart.appendChild(floatHeart);
+          setTimeout(() => floatHeart.remove(), 1000);
+        }
+
+        // Update storage and count display
+        localStorage.setItem('metaheadFavorites', JSON.stringify(favData));
+        heart.querySelector('.count').textContent = favData[card.name].count;
+      });
+
       cardEl.onclick = () => openPopup(card.flipImage[0], card.flipImage[1], card.name);
       grid.appendChild(cardEl);
     });
