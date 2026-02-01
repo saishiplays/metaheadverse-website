@@ -227,8 +227,9 @@ p { max-width: 680px; margin: auto; opacity: 0.8; line-height: 1.7; margin-botto
 .card img {
   width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 12px; /* square with slightly rounded corners */
+  object-fit: contain;
+  border-radius: 12px;
+  background: #0a0c1a;
   margin-bottom: 12px;
   border: 2px solid rgba(0,212,255,0.3);
   transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
@@ -266,6 +267,14 @@ p { max-width: 680px; margin: auto; opacity: 0.8; line-height: 1.7; margin-botto
   font-size: 12px;
   color: #aaa;
   margin-top: 8px;
+}
+
+.card-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px; /* space between icons */
+  margin-top: 6px;
 }
 .card-heart {
   cursor: pointer;
@@ -362,6 +371,31 @@ p { max-width: 680px; margin: auto; opacity: 0.8; line-height: 1.7; margin-botto
   60%  { transform: scale(1) rotate(10deg); }
   100% { transform: scale(0) rotate(-20deg); opacity: 0; }
 }
+
+.card-cart {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+  user-select: none;
+  position: relative;
+}
+
+.card-cart svg {
+  width: 24px;
+  height: 24px;
+  fill: #fff; /* white */
+  transition: transform 0.3s, filter 0.3s;
+  cursor: pointer;
+}
+.card-cart:hover svg {
+  fill: #00d4ff;
+  stroke: #00d4ff;
+  filter: drop-shadow(0 0 6px #00d4ff) drop-shadow(0 0 12px #0077ff);
+}
+
 
 /* POPUP */
 #popupOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1001; opacity: 0; transition: opacity 0.5s ease; }
@@ -582,10 +616,12 @@ fetch('metaheads.json')
   .then(res => res.json())
   .then(data => {
     const grid = document.getElementById('metaheadGrid');
+
     data.forEach((card, i) => {
       const cardEl = document.createElement('div');
       cardEl.className = 'card';
       cardEl.style.animationDelay = `${0.1 + i*0.1}s`;
+      cardEl.style.position = 'relative'; // for absolute/floating elements
 
       const storedFavorites = JSON.parse(localStorage.getItem('metaheadFavorites')) || {};
       const count = storedFavorites[card.name]?.count || 0;
@@ -594,19 +630,34 @@ fetch('metaheads.json')
       cardEl.innerHTML = `
         <img src="${card.image}" alt="${card.name}">
         <div class="card-name">${card.name}</div>
-        <div class="card-heart ${isFav ? 'favorited' : ''}">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 
-            4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
-            14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 
-            11.54L12 21.35z"/>
-          </svg>
-          <span class="count">${count}</span>
+
+        <!-- Heart + Count + Cart aligned horizontally -->
+        <div class="card-controls">
+
+          <!-- Professional Cart -->
+          <a href="${card.shopLink || '#'}" target="_blank" class="card-cart" title="Buy Now">
+            <svg viewBox="0 0 24 24">
+              <rect x="4" y="6" width="16" height="14" rx="4" ry="4" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M9 6V4a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </a>
+
+          <!-- Heart -->
+          <div class="card-heart ${isFav ? 'favorited' : ''}" title="Favorite">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 
+              14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span class="count">${count}</span>
+          </div>
+
         </div>
       `;
 
       const heart = cardEl.querySelector('.card-heart');
 
+      // Heart click logic
       heart.addEventListener('click', (e) => {
         e.stopPropagation();
         let favData = JSON.parse(localStorage.getItem('metaheadFavorites')) || {};
@@ -619,18 +670,17 @@ fetch('metaheads.json')
           favData[card.name].favorited = false;
           favData[card.name].count = Math.max(0, favData[card.name].count - 1);
 
-          heart.classList.add('unfavorited'); // trigger break animation
-          heart.classList.remove('favorited'); // remove filled state
-          setTimeout(() => heart.classList.remove('unfavorited'), 600); // reset after animation
+          heart.classList.add('unfavorited');
+          heart.classList.remove('favorited');
+          setTimeout(() => heart.classList.remove('unfavorited'), 600);
 
         } else {
           // FAVORITE with floating heart
           favData[card.name].favorited = true;
           favData[card.name].count += 1;
 
-          heart.classList.add('favorited'); // add filled heart
+          heart.classList.add('favorited');
 
-          // Floating heart effect
           const floatHeart = document.createElementNS("http://www.w3.org/2000/svg","svg");
           floatHeart.setAttribute("viewBox","0 0 24 24");
           floatHeart.className.baseVal = "floating-heart";
@@ -641,7 +691,6 @@ fetch('metaheads.json')
           setTimeout(() => floatHeart.remove(), 1000);
         }
 
-        // Update storage and count display
         localStorage.setItem('metaheadFavorites', JSON.stringify(favData));
         heart.querySelector('.count').textContent = favData[card.name].count;
       });
@@ -651,5 +700,6 @@ fetch('metaheads.json')
     });
   });
 </script>
+
 </body>
 </html>
