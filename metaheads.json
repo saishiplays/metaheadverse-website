@@ -241,6 +241,14 @@
       "assets/metaheads/static/konxole-static.png",
       "assets/metaheads/popup-cards/konxole-profile.png"
     ]
+  },
+  {
+    "id": "konxole",
+    "name": "Konxole",
+    "image": "assets/metaheads/thumbnail/konxole.gif",
+    "flipImage": [
+      "assets/metaheads/static/konxole-static.png",
+      "assets/metaheads/popup-cards/konxole-profile.png"
+    ]
   }
-
 ]
