@@ -6,7 +6,8 @@
     "flipImage": [
       "assets/metaheads/static/archead-static.png",
       "assets/metaheads/popup-cards/archead-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/4"
   },
   {
     "id": "calista",
@@ -15,7 +16,8 @@
     "flipImage": [
       "assets/metaheads/static/calista-static.png",
       "assets/metaheads/popup-cards/calista-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/3"
   },
   {
     "id": "greengineer",
@@ -24,7 +26,8 @@
     "flipImage": [
       "assets/metaheads/static/greengineer-static.png",
       "assets/metaheads/popup-cards/greengineer-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2227"
   },
   {
     "id": "entity-zero",
@@ -33,7 +36,8 @@
     "flipImage": [
       "assets/metaheads/static/entity-zero-static.png",
       "assets/metaheads/popup-cards/entity-zero-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1266"
   },
   {
     "id": "daevel",
@@ -42,7 +46,8 @@
     "flipImage": [
       "assets/metaheads/static/daevel-static.png",
       "assets/metaheads/popup-cards/daevel-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2525"
   },
   {
     "id": "commander-draco",
@@ -51,7 +56,8 @@
     "flipImage": [
       "assets/metaheads/static/commander-draco-static.png",
       "assets/metaheads/popup-cards/commander-draco-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2465"
   },
   {
     "id": "meltor",
@@ -60,7 +66,8 @@
     "flipImage": [
       "assets/metaheads/static/meltor-static.png",
       "assets/metaheads/popup-cards/meltor-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2157"
   },
   {
     "id": "stoliath",
@@ -69,7 +76,8 @@
     "flipImage": [
       "assets/metaheads/static/stoliath-static.png",
       "assets/metaheads/popup-cards/stoliath-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1497"
   },
   {
     "id": "aquaria",
@@ -78,7 +86,8 @@
     "flipImage": [
       "assets/metaheads/static/aquaria-static.png",
       "assets/metaheads/popup-cards/aquaria-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1597"
   },
   {
     "id": "space-wanderer",
@@ -87,7 +96,8 @@
     "flipImage": [
       "assets/metaheads/static/space-wanderer-static.png",
       "assets/metaheads/popup-cards/space-wanderer-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1157"
   },
   {
     "id": "death",
@@ -96,7 +106,8 @@
     "flipImage": [
       "assets/metaheads/static/death-static.png",
       "assets/metaheads/popup-cards/death-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2276"
   },
   {
     "id": "zynder-flayre",
@@ -105,7 +116,8 @@
     "flipImage": [
       "assets/metaheads/static/zynder-flayre-static.png",
       "assets/metaheads/popup-cards/zynder-flayre-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1098"
   },
   {
     "id": "tydra",
@@ -114,7 +126,8 @@
     "flipImage": [
       "assets/metaheads/static/tydra-static.png",
       "assets/metaheads/popup-cards/tydra-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2450"
   },
   {
     "id": "tyraus",
@@ -123,7 +136,8 @@
     "flipImage": [
       "assets/metaheads/static/tyraus-static.png",
       "assets/metaheads/popup-cards/tyraus-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1174"
   },
   {
     "id": "king-banarion",
@@ -132,7 +146,8 @@
     "flipImage": [
       "assets/metaheads/static/king-banarion-static.png",
       "assets/metaheads/popup-cards/king-banarion-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2207"
   },
   {
     "id": "meowborg",
@@ -141,7 +156,8 @@
     "flipImage": [
       "assets/metaheads/static/meowborg-static.png",
       "assets/metaheads/popup-cards/meowborg-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1198"
   },
   {
     "id": "eldervyn",
@@ -150,7 +166,8 @@
     "flipImage": [
       "assets/metaheads/static/eldervyn-static.png",
       "assets/metaheads/popup-cards/eldervyn-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2382"
   },
   {
     "id": "madtist",
@@ -159,7 +176,8 @@
     "flipImage": [
       "assets/metaheads/static/madtist-static.png",
       "assets/metaheads/popup-cards/madtist-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2436"
   },
   {
     "id": "froakbit",
@@ -168,7 +186,8 @@
     "flipImage": [
       "assets/metaheads/static/froakbit-static.png",
       "assets/metaheads/popup-cards/froakbit-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2495"
   },
   {
     "id": "chuckent",
@@ -177,7 +196,8 @@
     "flipImage": [
       "assets/metaheads/static/chuckent-static.png",
       "assets/metaheads/popup-cards/chuckent-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1325"
   },
   {
     "id": "barkane",
@@ -186,7 +206,8 @@
     "flipImage": [
       "assets/metaheads/static/barkane-static.png",
       "assets/metaheads/popup-cards/barkane-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1388"
   },
   {
     "id": "pupivor",
@@ -195,7 +216,8 @@
     "flipImage": [
       "assets/metaheads/static/pupivor-static.png",
       "assets/metaheads/popup-cards/pupivor-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1285"
   },
   {
     "id": "petru",
@@ -204,7 +226,8 @@
     "flipImage": [
       "assets/metaheads/static/petru-static.png",
       "assets/metaheads/popup-cards/petru-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/1303"
   },
   {
     "id": "samecha",
@@ -213,7 +236,8 @@
     "flipImage": [
       "assets/metaheads/static/samecha-static.png",
       "assets/metaheads/popup-cards/samecha-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2299"
   },
   {
     "id": "octosheriff",
@@ -222,7 +246,8 @@
     "flipImage": [
       "assets/metaheads/static/octosheriff-static.png",
       "assets/metaheads/popup-cards/octosheriff-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2346"
   },
   {
     "id": "phantor",
@@ -231,7 +256,8 @@
     "flipImage": [
       "assets/metaheads/static/phantor-static.png",
       "assets/metaheads/popup-cards/phantor-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2350"
   },
   {
     "id": "konxole",
@@ -240,7 +266,8 @@
     "flipImage": [
       "assets/metaheads/static/konxole-static.png",
       "assets/metaheads/popup-cards/konxole-profile.png"
-    ]
+    ],
+    "shopLink": "https://opensea.io/item/ronin/0x35e936487ce4b6128f7ce6e8c5a95c46f6d761fd/2408"
   }
 
 ]
