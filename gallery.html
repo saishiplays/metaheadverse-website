@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetaHeadverse NFT Gallery</title>
+<link rel="icon" href="assets/icons/favicon.png" type="image/png">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #05060b);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* SCROLL PROGRESS BAR */
+#scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00d4ff, #0077ff, #00d4ff);
+  width: 0%;
+  z-index: 1001;
+  box-shadow: 0 0 12px #00d4ff, 0 0 24px #0077ff;
+  transition: width 0.2s ease-out;
+}
+
+/* HEADER + MENU (your existing styles) */
+header { position: sticky; top: 0; z-index: 999; background: rgba(10,12,24,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+nav { max-width: 1200px; margin: auto; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-weight: 800; letter-spacing: 1.2px; font-size: 14px; cursor: pointer; }
+.menu { list-style: none; display: flex; gap: 28px; position: relative; }
+.menu > li { position: relative; }
+.menu a { font-size: 13px; opacity: 0.85; transition: all 0.3s; cursor: pointer; position: relative; }
+.menu a:hover, .menu a.current { opacity: 1; color: #00d4ff; text-shadow: 0 0 8px #00d4ff, 0 0 12px #00d4ff; }
+.menu a.current::after { content: ""; position: absolute; bottom: -4px; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #00d4ff, #0077ff, #00d4ff); border-radius: 2px; animation: neonUnderline 1.5s ease-in-out infinite; }
+@keyframes neonUnderline { 0%,100% { box-shadow: 0 0 4px #00d4ff,0 0 12px #00d4ff; opacity: 0.8; } 50% { box-shadow: 0 0 10px #00d4ff,0 0 20px #00d4ff; opacity: 1; } }
+
+/* FOOTER */
+footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 28px 20px; background: #080a18; }
+.footer-inner { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+.socials a { font-size: 12px; opacity: 0.7; margin-right: 14px; }
+.socials a:hover { opacity: 1; }
+.copyright { font-size: 12px; opacity: 0.6; }
+
+/* MAIN GALLERY STYLES */
+main { max-width: 1200px; margin: auto; padding: 120px 20px 60px; flex: 1; }
+h1 { font-size: clamp(36px, 6vw, 64px); text-align: center; margin-bottom: 24px; }
+.filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 40px; }
+.filters select, .filters input { padding: 10px 14px; font-size: 14px; border-radius: 6px; border: none; background: rgba(255,255,255,0.05); color: #fff; outline: none; backdrop-filter: blur(6px); }
+.filters select option { color: #000; }
+
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 24px; }
+.card { background: rgba(10,12,24,0.85); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; transition: all 0.3s; cursor: pointer; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 0 12px #00d4ff, 0 0 24px #0077ff; }
+.card img { width: 100%; display: block; }
+.card-info { padding: 12px; text-align: left; }
+.card-info h3 { font-size: 14px; margin-bottom: 6px; }
+.card-info p { font-size: 12px; opacity: 0.7; line-height: 1.4; }
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .filters { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="scrollProgress"></div>
+
+<header>
+  <nav>
+    <div class="logo" onclick="navigate('index.html')">METAHEADVERSE</div>
+    <ul class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="collection.html">Collection</a></li>
+      <li>
+        <a href="#">Lore</a>
+        <ul class="submenu">
+          <li><a href="worlds.html">Worlds</a></li>
+          <li><a href="metaheads.html">MetaHeads</a></li>
+        </ul>
+      </li>
+      <li><a href="gallery.html" class="current">Gallery</a></li>
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="minigame.html">Minigame</a></li>
+      <li>
+        <a href="#">About</a>
+        <ul class="submenu">
+          <li><a href="team.html">Team</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="utility.html">Utility</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<!-- Overlay & Mobile Menu (existing) -->
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-close" onclick="toggleMobile()">✕</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li class="has-submenu"><a onclick="toggleSubmenu(this)">Lore <span class="arrow">▶</span></a>
+      <ul class="mobile-submenu">
+        <li><a href="worlds.html">⤷ Worlds</a></li>
+        <li><a href="metaheads.html">⤷ MetaHeads</a></li>
+      </ul>
+    </li>
+    <li><a href="gallery.html" class="current">Gallery</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="minigame.html">Minigame</a></li>
+    <li class="has-submenu"><a onclick="toggleSubmenu(this)">About <span class="arrow">▶</span></a>
+      <ul class="mobile-submenu">
+        <li><a href="team.html">⤷ Team</a></li>
+        <li><a href="partners.html">⤷ Partners</a></li>
+        <li><a href="utility.html">⤷ Utility</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<main>
+  <h1>MetaHeads NFT Gallery</h1>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="Search by name..." oninput="filterGallery()">
+    <select id="traitType" onchange="filterGallery()">
+      <option value="">All Types</option>
+      <option value="Warrior">Warrior</option>
+      <option value="Mage">Mage</option>
+      <option value="Rogue">Rogue</option>
+    </select>
+    <select id="traitColor" onchange="filterGallery()">
+      <option value="">All Colors</option>
+      <option value="Red">Red</option>
+      <option value="Blue">Blue</option>
+      <option value="Green">Green</option>
+    </select>
+  </div>
+
+  <!-- GALLERY GRID -->
+  <div class="gallery" id="gallery">
+    <!-- Cards will be generated via JS -->
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="socials">
+      <a href="https://x.com/MetaHeadSociety" target="_blank">X</a>
+      <a href="https://discord.gg/m7XdE6N869" target="_blank">Discord</a>
+      <a href="https://opensea.io/collection/metaheadsociety" target="_blank">OpenSea</a>
+    </div>
+    <div class="copyright">© 2026 MetaHeadverse</div>
+  </div>
+</footer>
+
+<script>
+// --- Mobile Menu ---
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+  document.getElementById('mobileOverlay').classList.toggle('active');
+}
+function toggleSubmenu(element) {
+  const submenu = element.nextElementSibling;
+  submenu.classList.toggle('active');
+  const arrow = element.querySelector('.arrow');
+  arrow.classList.toggle('open');
+}
+function navigate(url) { window.location.href = url; }
+
+// --- Highlight current menu ---
+const currentPage = window.location.pathname.split("/").pop();
+function highlightCurrentMenu(menuSelector) {
+  const links = document.querySelectorAll(menuSelector + " a");
+  links.forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
+      link.classList.add("current");
+      const parentMenu = link.closest('.has-submenu');
+      if (parentMenu) parentMenu.querySelector('a').classList.add('current');
+    }
+  });
+}
+highlightCurrentMenu('.menu');
+highlightCurrentMenu('.mobile-menu ul');
+
+// --- Scroll Progress ---
+window.addEventListener('scroll', function(){
+  const scroll = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (scroll / height) * 100;
+  document.getElementById('scrollProgress').style.width = scrolled + '%';
+});
+
+// --- NFT DATA (example) ---
+const metaheads = [
+  {name: "Archead #001", image: "assets/metaheads/archead1.png", type: "Warrior", color: "Red"},
+  {name: "Archead #002", image: "assets/metaheads/archead2.png", type: "Mage", color: "Blue"},
+  {name: "Archead #003", image: "assets/metaheads/archead3.png", type: "Rogue", color: "Green"},
+  {name: "Archead #004", image: "assets/metaheads/archead4.png", type: "Warrior", color: "Blue"},
+  {name: "Archead #005", image: "assets/metaheads/archead5.png", type: "Mage", color: "Red"},
+  // Add all your MetaHeads here...
+];
+
+// --- Render Gallery ---
+function renderGallery(list) {
+  const gallery = document.getElementById('gallery');
+  gallery.innerHTML = '';
+  if(list.length === 0) {
+    gallery.innerHTML = '<p style="text-align:center;opacity:0.6;">No MetaHeads match your filters.</p>';
+    return;
+  }
+  list.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <div class="card-info">
+        <h3>${item.name}</h3>
+        <p>Type: ${item.type}</p>
+        <p>Color: ${item.color}</p>
+      </div>
+    `;
+    gallery.appendChild(card);
+  });
+}
+renderGallery(metaheads);
+
+// --- FILTER FUNCTION ---
+function filterGallery() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const type = document.getElementById('traitType').value;
+  const color = document.getElementById('traitColor').value;
+
+  const filtered = metaheads.filter(item => {
+    return (
+      (item.name.toLowerCase().includes(search)) &&
+      (type === "" || item.type === type) &&
+      (color === "" || item.color === color)
+    );
+  });
+  renderGallery(filtered);
+}
+</script>
+
+</body>
+</html>
