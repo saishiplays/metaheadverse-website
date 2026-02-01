@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MetaHeadverse - MetaHeads</title>
+<link rel="icon" href="assets/icons/favicon.png" type="image/png">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #05060b);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+/* SCROLL PROGRESS BAR */
+#scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00d4ff, #0077ff, #00d4ff);
+  width: 0%;
+  z-index: 1001;
+  box-shadow: 0 0 12px #00d4ff, 0 0 24px #0077ff;
+  transition: width 0.2s ease-out;
+}
+
+/* HEADER */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(10,12,24,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo { font-weight: 800; letter-spacing: 1.2px; font-size: 14px; cursor: pointer; }
+
+/* DESKTOP MENU */
+.menu { list-style: none; display: flex; gap: 28px; position: relative; }
+.menu > li { position: relative; }
+.menu a { font-size: 13px; opacity: 0.85; transition: all 0.3s; cursor: pointer; position: relative; }
+.menu a:hover, .menu a.current, .menu a.current-parent {
+  opacity: 1;
+  color: #00d4ff;
+  text-shadow: 0 0 8px #00d4ff, 0 0 12px #00d4ff;
+}
+.menu a.current::after, .menu a.current-parent::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #00d4ff, #0077ff, #00d4ff);
+  border-radius: 2px;
+  animation: neonUnderline 1.5s ease-in-out infinite;
+}
+.menu a:hover::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #00d4ff, #0077ff, #00d4ff);
+  border-radius: 2px;
+  animation: neonUnderline 1.5s ease-in-out infinite;
+}
+@keyframes neonUnderline {
+  0%,100% { box-shadow: 0 0 4px #00d4ff,0 0 12px #00d4ff; opacity: 0.8; }
+  50% { box-shadow: 0 0 10px #00d4ff,0 0 20px #00d4ff; opacity: 1; }
+}
+
+/* SUBMENU */
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: linear-gradient(180deg, #171a32, #0d0f1f);
+  border: 1px solid rgba(255,255,255,0.08);
+  list-style: none;
+  min-width: 200px;
+  padding: 10px 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+  pointer-events: none;
+}
+.submenu li a { display: block; padding: 10px 18px; font-size: 12px; opacity: 0.85; }
+.submenu li a:hover, .submenu li a.current { background: rgba(0,212,255,0.15); color: #00d4ff; text-shadow: 0 0 8px #00d4ff; }
+.menu li:hover > .submenu, .menu li:focus-within > .submenu { opacity: 1; visibility: visible; pointer-events: auto; }
+
+/* Mobile current page glow */
+.mobile-menu a.current, .mobile-submenu li a.current {
+  color: #00d4ff;
+  text-shadow: 0 0 8px #00d4ff, 0 0 12px #00d4ff;
+}
+.mobile-menu a.current-parent {
+  color: #00d4ff;
+  text-shadow: 0 0 8px #00d4ff, 0 0 12px #00d4ff;
+}
+
+/* HAMBURGER */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; transition: all 0.3s; }
+.hamburger span { width: 22px; height: 2px; background: #fff; transition: all 0.3s; }
+.hamburger:hover span { background: #00d4ff; }
+
+/* MOBILE MENU */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease;
+  z-index: 998;
+}
+.mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60%;
+  max-width: 320px;
+  height: 100%;
+  background: #060714;
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
+  padding: 60px 24px 24px 24px;
+  z-index: 999;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.6);
+  overflow-y: auto;
+}
+.mobile-menu.active { transform: translateX(0); }
+
+.mobile-close { position: absolute; top: 16px; right: 16px; font-size: 28px; cursor: pointer; opacity: 0.8; transition: opacity 0.2s; }
+.mobile-close:hover { opacity: 1; }
+
+.mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+.mobile-menu a { font-size: 18px; opacity: 0.85; display: flex; justify-content: space-between; align-items: center; padding: 12px 0; transition: all 0.3s ease; }
+.mobile-menu li { cursor: pointer; position: relative; }
+
+/* Neon divider */
+.mobile-menu ul li::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #00d4ff, #0077ff);
+  transition: width 0.6s ease;
+  opacity: 0.6;
+}
+.mobile-menu.active ul li::after { width: 100%; }
+
+/* Mobile submenu */
+.mobile-submenu {
+  list-style: none;
+  padding-left: 16px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+}
+.mobile-submenu.active { max-height: 500px; opacity: 1; }
+.mobile-submenu li a:hover, .mobile-submenu li a.current { color: #00d4ff; text-shadow: 0 0 8px #00d4ff; }
+
+.arrow { display: inline-block; transition: transform 0.3s ease; }
+.arrow.open { transform: rotate(90deg); }
+
+/* MAIN CONTENT */
+main { max-width: 1200px; margin: auto; padding: 120px 20px; flex: 1; text-align: center; display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: translateY(20px); animation: heroFadeIn 1s forwards 0.3s; }
+h1 { font-size: clamp(36px, 6vw, 64px); margin-bottom: 24px; }
+p { max-width: 680px; margin: auto; opacity: 0.8; line-height: 1.7; margin-bottom: 40px; }
+@keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+/* CARDS GRID */
+#metaheadGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 28px;
+  justify-content: center;
+  width: 100%;
+}
+@media (max-width: 1200px) { #metaheadGrid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 900px) { #metaheadGrid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { #metaheadGrid { grid-template-columns: repeat(2, 1fr); } }
+
+/* CARDS */
+.card { cursor: pointer; text-align: center; transition: transform 0.3s, box-shadow 0.3s; will-change: transform; width: 180px; height: 260px; display: flex; flex-direction: column; justify-content: flex-start; }
+.card img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); transition: transform 0.3s, box-shadow 0.3s, filter 0.3s; }
+.card:hover { transform: scale(1.06) translateY(-4px); }
+.card img:hover { transform: translateY(-10px) scale(1.05) rotate(-1deg); box-shadow: 0 0 25px rgba(255,255,255,0.15); filter: brightness(1.05); }
+.card-name { margin-top: 8px; font-size: 14px; text-align: center; flex: 1; }
+.card-flip-label { margin-bottom: 12px; font-size: 12px; opacity: 0.6; text-align: center; pointer-events: none; }
+
+/* POPUP */
+#popupOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1001; opacity: 0; transition: opacity 0.5s ease; }
+#popupCard { width: 450px; max-width: 90%; perspective: 1400px; position: relative; display: flex; flex-direction: column; align-items: center; transition: transform 0.15s ease; }
+#popupClose { position: absolute; top: -10px; right: -10px; color: #fff; font-size: 28px; cursor: pointer; transition: opacity 0.2s; font-weight: bold; background: none; }
+#popupClose:hover { opacity: 0.7; }
+#popupGlare { position: absolute; inset: 0; border-radius: 12px; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.35), rgba(255,255,255,0) 60%); opacity: 0; transition: opacity 0.2s; }
+#popupCardInner { width: 100%; height: 450px; position: relative; transform-style: preserve-3d; transition: transform 0.6s; border-radius: 12px; }
+#popupCardInner.is-flipped { transform: rotateY(180deg); }
+#popupCardFront, #popupCardBack { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; }
+#popupCardFront img, #popupCardBack img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+#popupCardBack { transform: rotateY(180deg); }
+#popupCardName { margin-top: 12px; font-size: 16px; font-weight: 600; text-align: center; color: #fff; }
+
+/* FOOTER */
+footer { border-top: 1px solid rgba(255,255,255,0.08); padding: 28px 20px; background: #080a18; }
+.footer-inner { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+.socials a { font-size: 12px; opacity: 0.7; margin-right: 14px; }
+.socials a:hover { opacity: 1; }
+.copyright { font-size: 12px; opacity: 0.6; }
+
+@media (max-width: 900px) { 
+  .menu { display: none; } 
+  .hamburger { display: flex; } 
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="scrollProgress"></div>
+
+<header>
+  <nav>
+    <div class="logo" onclick="navigate('index.html')">METAHEADVERSE</div>
+
+    <ul class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="collection.html">Collection</a></li>
+      <li>
+        <a href="#">Lore</a>
+        <ul class="submenu">
+          <li><a href="worlds.html">Worlds</a></li>
+          <li><a href="metaheads.html" class="current">MetaHeads</a></li>
+        </ul>
+      </li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="minigame.html">Minigame</a></li>
+      <li>
+        <a href="#">About</a>
+        <ul class="submenu">
+          <li><a href="team.html">Team</a></li>
+          <li><a href="partners.html">Partners</a></li>
+          <li><a href="utility.html">Utility</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<!-- Overlay -->
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-close" onclick="toggleMobile()">✕</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="collection.html">Collection</a></li>
+    <li class="has-submenu">
+      <a onclick="toggleSubmenu(this)">Lore <span class="arrow">▶</span></a>
+      <ul class="mobile-submenu">
+        <li><a href="worlds.html">⤷ Worlds</a></li>
+        <li><a href="metaheads.html" class="current">⤷ MetaHeads</a></li>
+      </ul>
+    </li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="marketplace.html">Marketplace</a></li>
+    <li><a href="minigame.html">Minigame</a></li>
+    <li class="has-submenu">
+      <a onclick="toggleSubmenu(this)">About <span class="arrow">▶</span></a>
+      <ul class="mobile-submenu">
+        <li><a href="team.html">⤷ Team</a></li>
+        <li><a href="partners.html">⤷ Partners</a></li>
+        <li><a href="utility.html">⤷ Utility</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<main>
+  <h1>Legendary MetaHeads</h1>
+  <div id="metaheadGrid"></div>
+</main>
+
+<!-- POPUP -->
+<div id="popupOverlay" onclick="closePopup()">
+  <div id="popupCard" onclick="event.stopPropagation()">
+    <div class="card-flip-label">Flip Me</div>
+    <div id="popupGlare"></div>
+    <div id="popupClose" onclick="closePopup()">×</div>
+    <div id="popupCardInner" onclick="toggleFlip()"></div>
+    <div id="popupCardName"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="socials">
+      <a href="https://x.com/MetaHeadSociety" target="_blank">X</a>
+      <a href="https://discord.gg/m7XdE6N869" target="_blank">Discord</a>
+      <a href="https://opensea.io/collection/metaheadsociety" target="_blank">OpenSea</a>
+    </div>
+    <div class="copyright">© 2026 MetaHeadverse</div>
+  </div>
+</footer>
+
+<script>
+// MOBILE MENU
+function toggleMobile() {
+  document.getElementById('mobileMenu').classList.toggle('active');
+  document.getElementById('mobileOverlay').classList.toggle('active');
+}
+function navigate(url) { window.location.href = url; }
+function toggleSubmenu(element) {
+  const submenu = element.nextElementSibling;
+  submenu.classList.toggle('active');
+  const arrow = element.querySelector('.arrow');
+  if(arrow) arrow.classList.toggle('open');
+}
+
+// Highlight current page for desktop and mobile menus
+const currentPage = window.location.pathname.split("/").pop();
+function highlightCurrentMenu(menuSelector) {
+  const links = document.querySelectorAll(menuSelector + " a");
+  links.forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
+      link.classList.add("current");
+
+      // Desktop parent glow
+      const parentLi = link.closest('ul').closest('li');
+      if (parentLi) {
+        const parentLink = parentLi.querySelector('a');
+        if (parentLink) parentLink.classList.add('current-parent');
+      }
+
+      // Mobile submenu open + glow
+      const mobileSubmenu = link.closest('.mobile-submenu');
+      if (mobileSubmenu) {
+        mobileSubmenu.classList.add('active'); // open submenu
+        const parentItem = mobileSubmenu.previousElementSibling; // parent <a>
+        if (parentItem) {
+          parentItem.classList.add('current-parent'); // glow
+          const arrow = parentItem.querySelector('.arrow');
+          if (arrow) arrow.classList.add('open'); // rotate arrow
+        }
+      }
+    }
+  });
+}
+highlightCurrentMenu('.menu');
+highlightCurrentMenu('.mobile-menu ul');
+
+// SCROLL PROGRESS
+window.addEventListener('scroll', function(){
+  const scroll = document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (scroll / height) * 100;
+  document.getElementById('scrollProgress').style.width = scrolled + '%';
+});
+
+// POPUP LOGIC
+function openPopup(front, back, name) {
+  const overlay = document.getElementById('popupOverlay');
+  overlay.style.display = 'flex';
+  overlay.style.opacity = 0;
+  setTimeout(() => overlay.style.opacity = 1, 10);
+
+  const inner = document.getElementById('popupCardInner');
+  inner.innerHTML = `
+    <div id='popupCardFront'><img src='${front}' alt='${name}'></div>
+    <div id='popupCardBack'><img src='${back}' alt='${name}'></div>
+  `;
+  inner.classList.remove('is-flipped');
+
+  document.getElementById('popupCardName').textContent = name;
+}
+function closePopup() {
+  const overlay = document.getElementById('popupOverlay');
+  overlay.style.opacity = 0;
+  setTimeout(() => overlay.style.display = 'none', 200);
+}
+function toggleFlip() { document.getElementById('popupCardInner').classList.toggle('is-flipped'); }
+document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closePopup(); });
+
+// 3D HOVER TILT
+const popupCard = document.getElementById('popupCard');
+const glare = document.getElementById('popupGlare');
+const isMobile = matchMedia('(pointer: coarse)').matches;
+if(!isMobile){
+  popupCard.addEventListener('mousemove', e => {
+    const r = popupCard.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const rx = ((y / r.height) - 0.5) * -10;
+    const ry = ((x / r.width) - 0.5) * 10;
+    popupCard.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale(1.03)`;
+    glare.style.opacity = 1;
+    glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,.35), rgba(255,255,255,0) 60%)`;
+  });
+  popupCard.addEventListener('mouseleave', () => {
+    popupCard.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+    glare.style.opacity = 0;
+  });
+}
+
+// LOAD CARDS
+fetch('metaheads.json')
+  .then(res => res.json())
+  .then(data => {
+    const grid = document.getElementById('metaheadGrid');
+    data.forEach((card, i) => {
+      const cardEl = document.createElement('div');
+      cardEl.className = 'card';
+      cardEl.style.animationDelay = `${0.1 + i*0.1}s`;
+      cardEl.innerHTML = `<img src="${card.image}" alt="${card.name}"><div class="card-name">${card.name}</div>`;
+      cardEl.onclick = () => openPopup(card.flipImage[0], card.flipImage[1], card.name);
+      grid.appendChild(cardEl);
+    });
+  });
+</script>
+</body>
+</html>
